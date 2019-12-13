@@ -1,8 +1,35 @@
+// Last in first out
 var Stack = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
+  var newInstance = Object.create(stackMethods);
+  newInstance.index = 0;
+  newInstance.storage = {};
+  return newInstance;
 };
 
-var stackMethods = {};
+stackMethods = {};
 
+stackMethods.push = function(val) {
+  this.storage[this.index + 1] = val;
+  this.index++;
+}
 
+stackMethods.pop = function() {
+  var store = this.storage[this.index];
+  delete this.storage[this.index];
+  this.index--;
+  if (this.index < 0) {
+    this.index = 0;
+  }
+  return store;
+}
+
+stackMethods.size = function() {
+  return this.index;
+}
+
+var newStack = Stack();
+newStack.push("thing");
+newStack.push("2thing2");
+console.log(newStack, "Size", newStack.size());
+newStack.pop();
+console.log(newStack, "Size", newStack.size());
